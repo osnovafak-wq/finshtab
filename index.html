@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Финштаб</title>
+  <meta name="description" content="Финштаб — семейные финансы под контролем: траты, доходы, лимиты, утечки и прогноз накоплений.">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#f2f2f7" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Финштаб">
+  <meta name="application-name" content="Финштаб">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="referrer" content="no-referrer">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="stylesheet" href="styles.css">
+  <script>
+    // тема до отрисовки, чтобы не мигало
+    try {
+      var p = JSON.parse(localStorage.getItem('finshtab.prefs') || '{}');
+      if (p.theme === 'light' || p.theme === 'dark') document.documentElement.setAttribute('data-theme', p.theme);
+    } catch (e) {}
+  </script>
+</head>
+<body class="locked">
+  <div id="lock" class="lock">
+    <div class="lock__inner">
+      <img class="lock__logo" src="icon-192.png" alt="">
+      <div class="lock__title">Финштаб</div>
+      <div class="lock__busy"><span class="spinner"></span><span>Загрузка…</span></div>
+    </div>
+  </div>
+
+  <header class="navbar" id="navbar" hidden>
+    <div class="navbar__inner">
+      <div class="navbar__side navbar__side--left"></div>
+      <div class="navbar__title"></div>
+      <div class="navbar__side navbar__side--right"></div>
+    </div>
+  </header>
+
+  <main class="app" id="app" hidden>
+    <section class="view" id="view-overview" data-tab="overview" aria-label="Обзор"></section>
+    <section class="view" id="view-ops" data-tab="ops" aria-label="Операции" hidden></section>
+    <section class="view" id="view-limits" data-tab="limits" aria-label="Лимиты" hidden></section>
+    <section class="view" id="view-analysis" data-tab="analysis" aria-label="Разбор" hidden></section>
+  </main>
+
+  <nav class="tabbar" id="tabbar" role="tablist" aria-label="Разделы" hidden>
+    <button type="button" class="tab" role="tab" data-act="tab" data-tab="overview" aria-selected="true"><span data-ico="house"></span><span>Обзор</span></button>
+    <button type="button" class="tab" role="tab" data-act="tab" data-tab="ops" aria-selected="false"><span data-ico="list"></span><span>Операции</span></button>
+    <button type="button" class="tab" role="tab" data-act="tab" data-tab="limits" aria-selected="false"><span data-ico="gauge"></span><span>Лимиты</span></button>
+    <button type="button" class="tab" role="tab" data-act="tab" data-tab="analysis" aria-selected="false"><span data-ico="sparkles"></span><span>Разбор</span></button>
+  </nav>
+  <button type="button" class="fab" id="fab" data-act="add" aria-label="Добавить операцию" hidden><span data-ico="plus"></span></button>
+
+  <div id="overlays"></div>
+  <div id="modals"></div>
+  <div id="toasts" aria-live="polite"></div>
+  <label class="haptic-label" aria-hidden="true"><input type="checkbox" switch tabindex="-1"></label>
+  <noscript><div style="padding:40px 20px;text-align:center;font-family:-apple-system,sans-serif">Для работы Финштаба включите JavaScript.</div></noscript>
+
+  <script defer src="core.js"></script>
+  <script defer src="store.js"></script>
+  <script defer src="sync.js"></script>
+  <script defer src="ui.js"></script>
+  <script defer src="views.js"></script>
+  <script defer src="settings.js"></script>
+  <script defer src="app.js"></script>
+</body>
+</html>
